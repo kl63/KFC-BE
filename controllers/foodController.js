@@ -1,3 +1,4 @@
+
 import foodModel from "../models/foodModel.js";
 import fs from 'fs'
 
@@ -51,5 +52,38 @@ const removeFood = async (req, res) => {
     }
 
 }
+// edit food
+const editFood = async (req, res) => {
+    try {
+        const { id, name, description, price, category } = req.body;
 
-export { listFood, addFood, removeFood }
+        // Find the food item by ID
+        const food = await foodModel.findById(id);
+
+        if (!food) {
+            return res.json({ success: false, message: "Food item not found" });
+        }
+
+        // Update the fields
+        food.name = name || food.name;
+        food.description = description || food.description;
+        food.price = price || food.price;
+        food.category = category || food.category;
+
+        // If a new image is uploaded, replace the old one
+        if (req.file) {
+            fs.unlink(`uploads/${food.image}`, () => {}); // Remove the old image
+            food.image = req.file.filename;
+        }
+
+        // Save the updated food item
+        await food.save();
+
+        res.json({ success: true, message: "Food Updated Successfully", data: food });
+    } catch (error) {
+        console.log(error);
+        res.json({ success: false, message: "Error updating food item" });
+    }
+};
+
+export { listFood, addFood, removeFood, editFood };
