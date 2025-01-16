@@ -3,7 +3,7 @@ import cors from "cors";
 import { connectDB } from "./config/db.js";
 import userRouter from "./routes/userRoute.js";
 import foodRouter from "./routes/foodRoute.js";
-import 'dotenv/config';
+import "dotenv/config";
 import cartRouter from "./routes/cartRoute.js";
 import orderRouter from "./routes/orderRoute.js";
 
@@ -20,13 +20,13 @@ connectDB();
 // api endpoints
 app.use("/api/user", userRouter);
 app.use("/api/food", foodRouter);
-app.use("/images", express.static('uploads'));
+app.use("/images", express.static("public/uploads"));
 app.use("/api/cart", cartRouter);
 app.use("/api/order", orderRouter);
 
 app.get("/", (req, res) => {
-    res.send("API Working");
+  res.send("API Working");
 });
 
-// Export the app as a module
+// Export the app for Vercel
 export default app;
