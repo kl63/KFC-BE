@@ -10,7 +10,7 @@ lerna-debug.log*
 node_modules
 *.local
 .env
-config/db.js
+
 
 # Editor directories and files
 .vscode/*
