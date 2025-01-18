@@ -1,8 +1,8 @@
-// File: /controllers/adminController.js
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import validator from "validator";
 import adminModel from "../models/adminModel.js";
+import mongoose from "mongoose";
 
 // Create token
 const createToken = (id) => jwt.sign({ id }, process.env.JWT_SECRET);
@@ -26,8 +26,8 @@ const loginAdmin = async (req, res) => {
         const token = createToken(admin._id);
         res.json({ success: true, token });
     } catch (error) {
-        console.log(error);
-        res.json({ success: false, message: "Error" });
+        console.error("Error logging in admin:", error);
+        res.status(500).json({ success: false, message: "Error logging in admin" });
     }
 };
 
@@ -55,9 +55,25 @@ const registerAdmin = async (req, res) => {
         const token = createToken(admin._id);
         res.json({ success: true, token });
     } catch (error) {
-        console.log(error);
-        res.json({ success: false, message: "Error" });
+        console.error("Error registering admin:", error);
+        res.status(500).json({ success: false, message: "Error registering admin" });
     }
 };
 
-export { loginAdmin, registerAdmin };
+// List admins
+const listAdmins = async (req, res) => {
+    try {
+        const admins = await adminModel.find();
+        res.status(200).json({ success: true, data: admins });
+    } catch (error) {
+        console.error("Error fetching admins:", error);
+        res.status(500).json({ success: false, message: "Error fetching admin list" });
+    }
+};
+
+
+
+
+
+export { loginAdmin, registerAdmin, listAdmins };
+
