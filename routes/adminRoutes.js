@@ -1,10 +1,12 @@
-// File: /routes/adminRoutes.js
 import express from "express";
-import { loginAdmin, registerAdmin } from "../controllers/adminController.js";
+import { loginAdmin, registerAdmin, listAdmins  } from "../controllers/adminController.js";
 
-const router = express.Router();
+const adminRouter = express.Router();
 
-router.post("/login", loginAdmin);
-router.post("/register", registerAdmin);
+adminRouter.post("/login", loginAdmin);
+adminRouter.post("/register", registerAdmin);
+adminRouter.get("/list", listAdmins);
 
-export default router;
+
+
+export default adminRouter;
