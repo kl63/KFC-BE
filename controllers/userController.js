@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import validator from "validator";
+import mongoose from "mongoose"; // Import mongoose for ObjectId validation
 import userModel from "../models/userModel.js";
 
 // Create token
@@ -72,7 +73,28 @@ const listUsers = async (req, res) => {
     }
 };
 
+// Remove a user
+const removeUser = async (req, res) => {
+    try {
+        const { id } = req.params; // Use req.params to get the ID from the URL
+        console.log("Received User ID:", id);  // Log the ID to verify it's correct
 
+        // Validate if ID is a valid ObjectId
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({ success: false, message: 'Invalid user ID format' });
+        }
+
+        const user = await userModel.findByIdAndDelete(id);
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'User not found' });
+        }
+
+        res.json({ success: true, message: 'User removed successfully' });
+    } catch (error) {
+        console.error('Error removing user:', error);
+        res.status(500).json({ success: false, message: 'Error removing user' });
+    }
+};
 
 // Export all functions
-export { loginUser, registerUser, listUsers };
+export { loginUser, registerUser, listUsers, removeUser };
