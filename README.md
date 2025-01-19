@@ -11,8 +11,9 @@ Welcome to the **Kevin's Fried Creations (KFC) Admin Dashboard**! This repositor
 
 ---
 
-## 🌐 Live Dashboard
+## 🌐 Live Site
 
+Check out the live site here: [Kevin's Fried Creations](https://kfc-be.onrender.com/)
 
 ---
 
@@ -23,6 +24,7 @@ Welcome to the **Kevin's Fried Creations (KFC) Admin Dashboard**! This repositor
 - **API Integration**: Axios for secure communication with the backend.
 - **Payments**: Stripe for secure payment processing.
 - **Database**: MongoDB for flexible and scalable data storage.
+- **Hosting**: Render for hosting the API and ensuring reliable backend performance.  
 - **Build Tool**: Webpack for optimized performance and builds.
 
 ---
