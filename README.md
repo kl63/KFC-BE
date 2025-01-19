@@ -1,6 +1,6 @@
-# Kevin's Fried Creations (KFC) Admin Dashboard
+# Kevin's Fried Creations (KFC) Backend
 
-Welcome to the **Kevin's Fried Creations (KFC) Admin Dashboard**! This repository powers the administrative interface for KFC, providing a robust platform to manage menu items, orders, and customer data efficiently.
+Welcome to the **Kevin's Fried Creations (KFC) Backend**! This repository powers the administrative interface for KFC, providing a robust platform to manage menu items, orders, and customer data efficiently.
 
 ---
 
