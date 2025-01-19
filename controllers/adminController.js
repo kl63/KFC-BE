@@ -2,10 +2,12 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import validator from "validator";
 import adminModel from "../models/adminModel.js";
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 // Create token
-const createToken = (id) => jwt.sign({ id }, process.env.JWT_SECRET);
+const createToken = (id) => {
+    return jwt.sign({ id }, process.env.JWT_SECRET);
+};
 
 // Login admin
 const loginAdmin = async (req, res) => {
@@ -71,9 +73,30 @@ const listAdmins = async (req, res) => {
     }
 };
 
+// Remove an admin
+const removeAdmin = async (req, res) => {
+    try {
+        const { id } = req.params;  // Get the ID from the URL params
+        console.log("Received Admin ID:", id);  // Log the ID on the backend
+
+        // Check if the id is a valid ObjectId (Mongoose expects this format)
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({ success: false, message: 'Invalid admin ID format' });
+        }
+
+        const admin = await adminModel.findByIdAndDelete(id);
+        if (!admin) {
+            return res.status(404).json({ success: false, message: 'Admin not found' });
+        }
+
+        res.json({ success: true, message: 'Admin removed successfully' });
+    } catch (error) {
+        console.error('Error removing admin:', error);
+        res.status(500).json({ success: false, message: 'Error removing admin' });
+    }
+};
 
 
 
 
-export { loginAdmin, registerAdmin, listAdmins };
-
+export { loginAdmin, registerAdmin, listAdmins, removeAdmin };
